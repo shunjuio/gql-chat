@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && ./bin/dev"
+    volumes:
+      - ./:/app
+      - bundle-volume:/usr/local/bundle
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+volumes:
+  bundle-volume:
+    driver: local
