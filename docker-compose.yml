@@ -7,11 +7,6 @@ services:
     volumes:
       - ./:/app
       - bundle-volume:/usr/local/bundle
-    develop:
-      watch:
-        - action: sync
-          path: ./
-          target: /app
     ports:
       - "3000:3000"
     stdin_open: true
