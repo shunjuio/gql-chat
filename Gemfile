@@ -17,7 +17,7 @@ gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
 
-gem 'graphql'
+gem "graphql"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -26,5 +26,5 @@ group :development, :test do
 end
 
 group :development do
-  gem 'graphiql-rails'
+  gem "graphiql-rails"
 end
