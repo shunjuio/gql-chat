@@ -6,7 +6,6 @@ gem "puma", ">= 5.0"
 
 gem "propshaft"
 gem "jsbundling-rails"
-gem "cssbundling-rails"
 
 # gem "solid_cache"
 # gem "solid_queue"
