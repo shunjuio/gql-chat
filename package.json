@@ -5,14 +5,10 @@
     "esbuild": "^0.25.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.6"
+    "react-dom": "^19.0.0"
   }
 }
