@@ -27,5 +27,7 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    field :messages, resolver: Resolvers::Messages
   end
 end
