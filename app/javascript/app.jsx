@@ -99,16 +99,14 @@ const App = function () {
           messages(existingMessages = []) {
             const newMessageRef = cache.writeFragment({
               data: message,
-              fragment: graphql(
-                `
-                  fragment NewMessage on Message {
-                    id
-                    senderName
-                    content
-                    createdAt
-                  }
-                `
-              ),
+              fragment: graphql(`
+                fragment NewMessage on Message {
+                  id
+                  senderName
+                  content
+                  createdAt
+                }
+              `),
             });
             return [newMessageRef, ...existingMessages];
           },
