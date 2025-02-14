@@ -1,0 +1,31 @@
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
+
+type Message {
+  content: String!
+  createdAt: ISO8601DateTime!
+  id: ID!
+  senderName: String!
+  updatedAt: ISO8601DateTime!
+}
+
+type Mutation {
+  """
+  An example field added by the generator
+  """
+  testField: String!
+}
+
+type Query {
+  """
+  Find messages
+  """
+  messages: [Message!]!
+
+  """
+  An example field added by the generator
+  """
+  testField: String!
+}
