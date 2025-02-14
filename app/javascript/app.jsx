@@ -14,8 +14,8 @@ const GET_MESSAGES = graphql(`
 `);
 
 const CREATE_MESSAGE = graphql(`
-  mutation CreateMessage($senderName: String!, $content: String!) {
-    createMessage(input: { senderName: $senderName, content: $content }) {
+  mutation CreateMessage($content: String!) {
+    createMessage(input: {content: $content }) {
       message {
         id
         senderName
@@ -27,15 +27,13 @@ const CREATE_MESSAGE = graphql(`
 `);
 
 const Form = function ({ createMessage }) {
-  const [senderName, setSenderName] = useState("");
   const [content, setContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createMessage({
-      variables: { senderName, content },
+      variables: { content },
     }).then(() => {
-      setSenderName("");
       setContent("");
     });
   };
@@ -46,13 +44,6 @@ const Form = function ({ createMessage }) {
         className="flex flex-col border-1 px-4 py-2"
         onSubmit={handleSubmit}
       >
-        <input
-          value={senderName}
-          type="text"
-          placeholder="name"
-          className="max-w-32 border border-gray-300 rounded-md p-2"
-          onChange={(e) => setSenderName(e.target.value)}
-        />
         <textarea
           value={content}
           placeholder="content"
