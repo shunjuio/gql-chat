@@ -7,7 +7,6 @@ input CreateMessageInput {
   """
   clientMutationId: String
   content: String!
-  senderName: String!
 }
 
 """
