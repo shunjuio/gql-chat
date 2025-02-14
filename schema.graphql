@@ -8,7 +8,6 @@ type Message {
   createdAt: ISO8601DateTime!
   id: ID!
   senderName: String!
-  updatedAt: ISO8601DateTime!
 }
 
 type Mutation {
