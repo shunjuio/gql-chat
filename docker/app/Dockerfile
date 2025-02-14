@@ -13,7 +13,7 @@ RUN npm install --global yarn
 
 WORKDIR /app
 
-COPY docker/app/entrypoint.sh /usr/bin/
+COPY entrypoint.sh /usr/bin/
 
 RUN chmod +x /usr/bin/entrypoint.sh
 
