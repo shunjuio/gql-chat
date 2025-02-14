@@ -3,6 +3,7 @@
   "private": true,
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.5",
+    "@parcel/watcher": "^2.5.1",
     "@tailwindcss/cli": "^4.0.6",
     "esbuild": "^0.25.0"
   },

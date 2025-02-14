@@ -1,7 +1,8 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { graphql } from './gql';
 import React from 'react'
 
-const GET_MESSAGES = gql`
+const GET_MESSAGES = graphql(`
   query GetMessages {
     messages {
       id
@@ -10,7 +11,7 @@ const GET_MESSAGES = gql`
       createdAt
     }
   }
-`;
+`);
 
 const App = function () {
   const { data, loading, error } = useQuery(GET_MESSAGES);
