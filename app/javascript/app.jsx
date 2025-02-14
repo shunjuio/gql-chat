@@ -1,12 +1,20 @@
-import React from 'react';
+import { gql, useQuery } from '@apollo/client';
+import React from 'react'
 
-const mockDatas = [
-  {id: 1, name: "one", date: "1/1", content: "ああああああああああああ"},
-  {id: 2, name: "two", date: "1/2", content: "ああああああああああああ"},
-  {id: 3, name: "three", date: "1/3", content: "ああああああああああああ"},
-]
+const GET_MESSAGES = gql`
+  query GetMessages {
+    messages {
+      id
+      senderName
+      content
+      createdAt
+    }
+  }
+`;
 
 const App = function () {
+  const { data, loading, error } = useQuery(GET_MESSAGES);
+
   return (
     <div className="mx-auto max-w-[640px] px-10">
       <div className="pt-2">
@@ -27,15 +35,15 @@ const App = function () {
       </div>
 
       <div>
-      {mockDatas.map((mockData) => (
-        <section className="flex flex-col items-center border-1 py-4 my-10">
-          <div className="flex justify-around w-full">
-            <p>{mockData.name}</p>
-            <p>{mockData.date}</p>
-          </div>
-          <p className="p-2">{mockData.content}</p>
-        </section>
-      ))}
+        {data?.messages.map((message) => (
+          <section className="flex flex-col items-center border-1 py-4 my-10" key={message.id}>
+            <div className="flex justify-around w-full">
+              <p>{message.senderName}</p>
+              <p>{message.createdAt}</p>
+            </div>
+            <p className="p-2">{message.content}</p>
+          </section>
+        ))}
       </div>
     </div>
   )
