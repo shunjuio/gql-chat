@@ -34,10 +34,10 @@ const Form = function () {
   );
 };
 
-const List = function ({ data }) {
+const List = function ({ messages }) {
   return (
     <div>
-      {data?.messages.map((message) => (
+      {messages.map((message) => (
         <div
           className="flex flex-col items-center border-1 py-4 my-10"
           key={message.id}
@@ -59,7 +59,7 @@ const App = function () {
   return (
     <div className="mx-auto max-w-[640px] px-10">
       <Form />
-      <List data={data} />
+      <List messages={data?.messages ?? []} />
     </div>
   );
 };
