@@ -4,7 +4,7 @@ module Resolvers
     type [ Types::MessageType ], null: false
 
     def resolve
-      Message.all
+      Message.all.order(id: :desc)
     end
   end
 end
