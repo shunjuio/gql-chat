@@ -5,17 +5,21 @@ import React, { useState } from "react";
 const GET_MESSAGES = graphql(`
   query GetMessages {
     messages {
-      id
-      senderName
-      content
-      createdAt
+      edges {
+        node {
+          id
+          senderName
+          content
+          createdAt
+        }
+      }
     }
   }
 `);
 
 const CREATE_MESSAGE = graphql(`
   mutation CreateMessage($content: String!) {
-    createMessage(input: {content: $content }) {
+    createMessage(input: { content: $content }) {
       message {
         id
         senderName
@@ -82,12 +86,14 @@ const List = function ({ messages }) {
 
 const App = function () {
   const { data, loading, error } = useQuery(GET_MESSAGES);
+  const messages = data ? data.messages.edges.map((edge) => edge.node) : [];
   const [createMessage] = useMutation(CREATE_MESSAGE, {
     update(cache, { data }) {
       const message = data.createMessage.message;
       cache.modify({
         fields: {
           messages(existingMessages = []) {
+            const newExistingMessages = structuredClone(existingMessages);
             const newMessageRef = cache.writeFragment({
               data: message,
               fragment: graphql(`
@@ -99,7 +105,12 @@ const App = function () {
                 }
               `),
             });
-            return [newMessageRef, ...existingMessages];
+            const edge = {
+              __typename: "MessageEdge",
+              node: newMessageRef,
+            };
+            newExistingMessages.edges = [edge, ...newExistingMessages.edges];
+            return newExistingMessages;
           },
         },
       });
@@ -109,7 +120,7 @@ const App = function () {
   return (
     <div className="mx-auto max-w-[640px] px-10">
       <Form createMessage={createMessage} />
-      <List messages={data?.messages ?? []} />
+      <List messages={messages} />
     </div>
   );
 };
