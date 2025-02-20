@@ -1,7 +1,6 @@
-module Types
-  class BaseObject < GraphQL::Schema::Object
+module Unions
+  class Base < GraphQL::Schema::Union
     edge_type_class(Edges::Base)
     connection_type_class(Connections::Base)
-    field_class Fields::Base
   end
 end
