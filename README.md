@@ -1,24 +1,14 @@
-# README
+# GQL Chat
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このシンプルなチャットアプリケーションは、クライアントとサーバー間の通信にGraphQLを使用しています。サーバーは`graphql` gemを使用してGraphQL APIを公開するRuby on Railsアプリケーションです。クライアントは`apollo-client`ライブラリを使用してサーバーと通信するReactアプリケーションです。
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## ツール
+- Ruby on Rails
+- React
+- Apollo Client
+- GraphQL, graphql-ruby
+- SQLite
+- Docker Compose
+- Tailwind CSS
+- esbuild
+- GraphQL Codegen
