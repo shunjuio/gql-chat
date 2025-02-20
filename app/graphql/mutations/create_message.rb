@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Mutations
-  class CreateMessage < BaseMutation
+  class CreateMessage < Mutations::Base
     field :message, Types::MessageType, null: false
 
     argument :content, String, required: true
