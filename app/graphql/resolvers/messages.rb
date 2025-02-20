@@ -1,7 +1,8 @@
 module Resolvers
   class Messages < Resolvers::Base
-    description "Find messages"
-    type Types::Message.connection_type, null: false
+    description "Fetch messages"
+
+    type Connections::MessageConnection, null: false
 
     def resolve
       Message.all.order(id: :desc)
