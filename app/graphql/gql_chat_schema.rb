@@ -1,6 +1,6 @@
 class GqlChatSchema < GraphQL::Schema
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+  query { Types::QueryType }
+  mutation { Types::MutationType }
 
   use GraphQL::Dataloader
 
