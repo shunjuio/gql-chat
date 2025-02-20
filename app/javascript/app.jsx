@@ -3,8 +3,8 @@ import { graphql } from "./gql";
 import React, { useState } from "react";
 
 const GET_MESSAGES = graphql(`
-  query GetMessages {
-    messages {
+  query GetMessages($first: Int!, $after: String!) {
+    messages(first: $first, after: $after) {
       edges {
         node {
           id
@@ -85,7 +85,12 @@ const List = function ({ messages }) {
 };
 
 const App = function () {
-  const { data, loading, error } = useQuery(GET_MESSAGES);
+  const { data, loading, error } = useQuery(GET_MESSAGES, {
+    variables: {
+      first: 10,
+      after: "",
+    },
+  });
   const messages = data ? data.messages.edges.map((edge) => edge.node) : [];
   const [createMessage] = useMutation(CREATE_MESSAGE, {
     update(cache, { data }) {
