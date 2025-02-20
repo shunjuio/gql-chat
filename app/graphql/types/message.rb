@@ -1,5 +1,5 @@
 module Types
-  class MessageType < Types::BaseObject
+  class Message < Types::BaseObject
     implements Interfaces::Node
 
     global_id_field :id

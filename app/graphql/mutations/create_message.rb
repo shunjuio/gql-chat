@@ -1,6 +1,6 @@
 module Mutations
   class CreateMessage < Mutations::Base
-    field :message, Types::MessageType, null: false
+    field :message, Types::Message, null: false
 
     argument :content, String, required: true
 
