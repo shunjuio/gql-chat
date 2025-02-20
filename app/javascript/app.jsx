@@ -2,6 +2,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { graphql } from "./gql";
 import React, { useState } from "react";
 
+const FETCH_LIMIT = 10;
+
 const GET_MESSAGES = graphql(`
   query GetMessages($first: Int!, $after: String!) {
     messages(first: $first, after: $after) {
@@ -12,6 +14,10 @@ const GET_MESSAGES = graphql(`
           content
           createdAt
         }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }
@@ -65,33 +71,51 @@ const Form = function ({ createMessage }) {
   );
 };
 
-const List = function ({ messages }) {
+const List = function ({ messages, onClick, hasNextPage }) {
   return (
-    <div>
-      {messages.map((message) => (
-        <div
-          className="flex flex-col items-center border-1 py-4 my-10"
-          key={message.id}
-        >
-          <div className="flex justify-around w-full">
-            <p>{message.senderName}</p>
-            <p>{message.createdAt}</p>
+    <>
+      <div>
+        {messages.map((message) => (
+          <div
+            className="flex flex-col items-center border-1 py-4 my-10"
+            key={message.id}
+          >
+            <div className="flex justify-around w-full">
+              <p>{message.senderName}</p>
+              <p>{message.createdAt}</p>
+            </div>
+            <p className="p-2">{message.content}</p>
           </div>
-          <p className="p-2">{message.content}</p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      {messages.length > 0 && (
+        <MoreButton onClick={onClick} hasNextPage={hasNextPage} />
+      )}
+    </>
+  );
+};
+
+const MoreButton = function ({ onClick, hasNextPage }) {
+  return (
+    <button
+      className="block mx-auto bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 disabled:bg-blue-200"
+      onClick={onClick}
+      disabled={!hasNextPage}
+    >
+      もっと見る
+    </button>
   );
 };
 
 const App = function () {
-  const { data, loading, error } = useQuery(GET_MESSAGES, {
+  const { data, loading, error, fetchMore } = useQuery(GET_MESSAGES, {
     variables: {
-      first: 10,
+      first: FETCH_LIMIT,
       after: "",
     },
   });
   const messages = data ? data.messages.edges.map((edge) => edge.node) : [];
+  const hasNextPage = data ? data.messages.pageInfo.hasNextPage : false;
   const [createMessage] = useMutation(CREATE_MESSAGE, {
     update(cache, { data }) {
       const message = data.createMessage.message;
@@ -122,10 +146,29 @@ const App = function () {
     },
   });
 
+  const clickMore = () => {
+    fetchMore({
+      variables: {
+        first: FETCH_LIMIT,
+        after: data?.messages.pageInfo.endCursor || "",
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          messages: {
+            __typename: "MessageConnection",
+            edges: [...prev.messages.edges, ...fetchMoreResult.messages.edges],
+            pageInfo: fetchMoreResult.messages.pageInfo,
+          },
+        };
+      },
+    });
+  };
+
   return (
-    <div className="mx-auto max-w-[640px] px-10">
+    <div className="mx-auto max-w-[640px] p-10">
       <Form createMessage={createMessage} />
-      <List messages={messages} />
+      <List messages={messages} onClick={clickMore} hasNextPage={hasNextPage} />
     </div>
   );
 };
