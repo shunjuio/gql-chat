@@ -297,7 +297,6 @@ DEPENDENCIES
   brakeman
   cssbundling-rails
   debug
-  globalid
   graphiql-rails
   graphql
   jsbundling-rails
