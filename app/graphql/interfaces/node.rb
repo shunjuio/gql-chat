@@ -1,6 +1,7 @@
 module Interfaces
   module Node
     include Interfaces::Base
-    include GraphQL::Types::Relay::NodeBehaviors
+
+    field :id, ID, null: false
   end
 end
