@@ -9,7 +9,7 @@ class GqlChatSchema < GraphQL::Schema
   end
 
   def self.resolve_type(abstract_type, obj, ctx)
-    raise(GraphQL::RequiredImplementationMissingError)
+    abstract_type
   end
 
   max_query_string_tokens(5000)
