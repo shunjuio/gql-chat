@@ -16,6 +16,7 @@ gem "bootsnap", require: false
 
 gem "kamal", require: false
 gem "thruster", require: false
+gem "skylight"
 
 gem "graphql"
 gem "globalid"
