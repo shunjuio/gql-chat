@@ -100,7 +100,7 @@ GEM
       activesupport (>= 6.1)
     graphiql-rails (1.10.4)
       railties
-    graphql (2.4.16)
+    graphql (2.5.3)
       base64
       fiber-storage
       logger
@@ -303,7 +303,7 @@ DEPENDENCIES
   debug
   globalid
   graphiql-rails
-  graphql (~> 2.4.16)
+  graphql (~> 2.5.3)
   jsbundling-rails
   kamal
   propshaft
