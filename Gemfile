@@ -18,7 +18,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "skylight"
 
-gem "graphql", "~> 2.4.16" # skylight(6.0.4) graphql probe が 2.5.0 以降に対応していないため固定
+gem "graphql", "~> 2.5.5" # skylight(6.0.4) graphql probe が 2.5.0 以降に対応していないため固定
 gem "globalid"
 
 group :development, :test do
