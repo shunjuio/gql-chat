@@ -8,7 +8,7 @@ class GraphqlChannel < ApplicationCable::Channel
     variables = ensure_hash(data["variables"])
     operation_name = data["operationName"]
     context = {
-      channel: self, # ActionCableSubscriptionsで必要
+      channel: self # ActionCableSubscriptionsで必要
     }
 
     result = GqlChatSchema.execute(

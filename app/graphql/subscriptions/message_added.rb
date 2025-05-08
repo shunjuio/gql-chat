@@ -10,7 +10,7 @@ module Subscriptions
 
     def update(payload = nil)
       message_record = Message.last || Message.new(
-        id: 'dummy',
+        id: "dummy",
         sender_name: "System",
         content: "No message available.",
         created_at: Time.current,
