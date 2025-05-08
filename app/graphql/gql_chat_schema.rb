@@ -1,8 +1,12 @@
 class GqlChatSchema < GraphQL::Schema
   query { Types::QueryType }
   mutation { Types::MutationType }
+  subscription { Types::SubscriptionType }
 
   use GraphQL::Dataloader
+  use GraphQL::Subscriptions::ActionCableSubscriptions,
+      broadcast: true,
+      default_broadcastable: true
 
   def self.type_error(err, context)
     super
