@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy", as: "logout"
 
   get "up" => "rails/health#show", as: :rails_health_check
+
+  mount ActionCable.server => "/cable"
 end
