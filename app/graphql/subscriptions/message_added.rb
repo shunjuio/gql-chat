@@ -1,5 +1,5 @@
 module Subscriptions
-  class MessageAdded < GraphQL::Schema::Subscription
+  class MessageAdded < Base
     description "新しいメッセージが追加された時に発火するサブスクリプション"
 
     field :message, Types::Message, null: false, description: "新しく追加されたメッセージ"
