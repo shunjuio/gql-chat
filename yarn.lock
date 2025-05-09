@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@apollo/client@^3.13.0":
-  version "3.13.0"
-  resolved "https://registry.npmjs.org/@apollo/client/-/client-3.13.0.tgz"
-  integrity sha512-sCrdGw6Jv+0csdy5YwnAJ231CJWvJOBsHB3mZWdI+jA62lsJcV2TYWSaIYd7Cno3Apk8JBDbEGrMEKALeQUmOQ==
+"@apollo/client@^3.13.2":
+  version "3.13.2"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.13.2.tgz#16939bbff51476c9fbd1d1ca9e8235eb90591324"
+  integrity sha512-czLeqQuRB3RqcpEWFTJ/wfT+povpLfGAsprP2i9rsKj5PkH94IrFaI7ETtTMwOrycWFw/MJX9HCFGBslB/MGNg==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@wry/caches" "^1.0.0"
@@ -925,6 +925,11 @@
     "@parcel/watcher-win32-ia32" "2.5.1"
     "@parcel/watcher-win32-x64" "2.5.1"
 
+"@rails/actioncable@^8.0.100":
+  version "8.0.100"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-8.0.100.tgz#83733a8fa35be5d085cf0fe10b341d0428022bc0"
+  integrity sha512-/vXTG6gzSW0CDqmA0hWasZ1UAGZC7g5NGM21jowh58rCCeTHAGbWwKExHn49VDuYXz+cHbL4MGfc5LMdTp9m3A==
+
 "@repeaterjs/repeater@^3.0.4", "@repeaterjs/repeater@^3.0.6":
   version "3.0.6"
   resolved "https://registry.npmjs.org/@repeaterjs/repeater/-/repeater-3.0.6.tgz"
@@ -1700,7 +1705,7 @@ graphql-ws@^6.0.3:
 
 graphql@^16.10.0:
   version "16.10.0"
-  resolved "https://registry.npmjs.org/graphql/-/graphql-16.10.0.tgz"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.10.0.tgz#24c01ae0af6b11ea87bf55694429198aaa8e220c"
   integrity sha512-AjqGKbDGUFRKIRCP9tCKiIGHyriz2oHEbPIbEtcSLSs4YjReZOIPQQWek4+6hjw62H9QShXHyaGivGiYVLeYFQ==
 
 has-flag@^4.0.0:

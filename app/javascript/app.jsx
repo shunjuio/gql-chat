@@ -1,6 +1,7 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { graphql } from "./gql";
 import React, { useState } from "react";
+import { useApolloClient } from "@apollo/client";
 
 const FETCH_LIMIT = 10;
 
@@ -26,6 +27,19 @@ const GET_MESSAGES = graphql(`
 const CREATE_MESSAGE = graphql(`
   mutation CreateMessage($content: String!) {
     createMessage(input: { content: $content }) {
+      message {
+        id
+        senderName
+        content
+        createdAt
+      }
+    }
+  }
+`);
+
+const MESSAGE_ADDED_SUBSCRIPTION = graphql(`
+  subscription MessageAdded {
+    messageAdded {
       message {
         id
         senderName
@@ -108,6 +122,7 @@ const MoreButton = function ({ onClick, hasNextPage }) {
 };
 
 const App = function () {
+  const client = useApolloClient();
   const { data, loading, error, fetchMore } = useQuery(GET_MESSAGES, {
     variables: {
       first: FETCH_LIMIT,
@@ -123,16 +138,17 @@ const App = function () {
         fields: {
           messages(existingMessages = []) {
             const newExistingMessages = structuredClone(existingMessages);
+            const fragment = graphql(`
+              fragment NewMessage on Message {
+                id
+                senderName
+                content
+                createdAt
+              }
+            `);
             const newMessageRef = cache.writeFragment({
               data: message,
-              fragment: graphql(`
-                fragment NewMessage on Message {
-                  id
-                  senderName
-                  content
-                  createdAt
-                }
-              `),
+              fragment: fragment,
             });
             const edge = {
               __typename: "MessageEdge",
@@ -144,6 +160,66 @@ const App = function () {
         },
       });
     },
+  });
+
+  useSubscription(MESSAGE_ADDED_SUBSCRIPTION, {
+    onData: ({ data }) => {
+      if (data.data && data.data.messageAdded) {
+        const newMessage = data.data.messageAdded.message;
+
+        try {
+          const existingData = client.readQuery({
+            query: GET_MESSAGES,
+            variables: { first: FETCH_LIMIT, after: "" },
+          });
+
+          if (existingData) {
+            const messageExists = existingData.messages.edges.some(
+              edge => edge.node.id === newMessage.id
+            );
+
+            if (!messageExists) {
+              client.cache.modify({
+                fields: {
+                  messages(existingMessages = { edges: [], pageInfo: { hasNextPage: false, endCursor: null } }) {
+                    const newExistingMessages = structuredClone(existingMessages);
+                    const fragment = graphql(`
+                      fragment NewSubMessage on Message {
+                        id
+                        senderName
+                        content
+                        createdAt
+                      }
+                    `);
+                    const newMessageRef = client.cache.writeFragment({
+                      data: newMessage,
+                      fragment: fragment,
+                    });
+                    const edge = {
+                      __typename: "MessageEdge",
+                      node: newMessageRef,
+                    };
+                    newExistingMessages.edges = [edge, ...newExistingMessages.edges];
+                    return newExistingMessages;
+                  },
+                },
+              });
+            }
+          }
+        } catch (error) {
+          // readQuery はキャッシュにデータがない場合にエラーを投げる可能性がある
+          if (error.message.includes("Can't find field 'messages'")) {
+            console.warn("Cache miss for GET_MESSAGES, skipping subscription update.");
+            // 必要であれば writeQuery で初期データを書き込む処理を追加
+          } else {
+            console.error('Error updating cache from subscription:', error);
+          }
+        }
+      }
+    },
+    onError: (error) => {
+      console.error('Subscription error:', error);
+    }
   });
 
   const clickMore = () => {
@@ -167,8 +243,9 @@ const App = function () {
 
   return (
     <div className="mx-auto max-w-[640px] p-10">
-      <Form createMessage={createMessage} />
-      <List messages={messages} onClick={clickMore} hasNextPage={hasNextPage} />
+      <h1 className="text-2xl font-bold text-center mb-5">GQL Chat</h1>
+      <Form createMessage={createMessage}/>
+      <List messages={messages} onClick={clickMore} hasNextPage={hasNextPage}/>
     </div>
   );
 };

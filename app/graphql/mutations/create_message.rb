@@ -9,7 +9,14 @@ module Mutations
       raise GraphQL::ExecutionError, "You need to authenticate to perform this action" unless user
 
       message = Message.create!(sender_name: user.name, content: args[:content])
-      { message: message }
+
+      GqlChatSchema.subscriptions.trigger(
+        "messageAdded",
+        {},
+        { message: }
+      )
+
+      { message: }
     end
   end
 end
