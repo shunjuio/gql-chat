@@ -8,6 +8,18 @@ class GqlChatSchema < GraphQL::Schema
       broadcast: true,
       default_broadcastable: true
 
+  rescue_from(ActiveRecord::RecordNotFound) do |err, obj, args, ctx, field|
+    raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found", code: "RESOURCE_NOTFOUND"
+  end
+
+  rescue_from(StandardError) do |err, obj, args, ctx, field|
+    raise err if Rails.env.development? || Rails.env.test?
+
+    Rails.logger.error(err)
+    Rails.logger.error(err.backtrace.join("\n"))
+    GraphQL::ExecutionError.new("エラーが発生しました。", extensions: { code: "INTERNAL_SERVER_ERROR" })
+  end
+
   def self.type_error(err, context)
     super
   end
