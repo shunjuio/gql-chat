@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 gem "sqlite3", ">= 2.1"
 gem "puma", ">= 5.0"
+gem "redis"
 
 gem "propshaft"
 gem "jsbundling-rails"
@@ -10,7 +11,7 @@ gem "cssbundling-rails"
 
 # gem "solid_cache"
 # gem "solid_queue"
-gem "solid_cable"
+# gem "solid_cable"
 
 gem "bootsnap", require: false
 
