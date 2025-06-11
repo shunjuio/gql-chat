@@ -2,7 +2,7 @@ module Subscriptions
   class MessageAdded < Base
     description "新しいメッセージが追加された時に発火するサブスクリプション"
 
-    field :message, Types::Message, null: false, description: "新しく追加されたメッセージ"
+    field :message, Types::Message, null: false, description: "新しく追加されたメッセージ", broadcastable: true
 
     def subscribe
       {}

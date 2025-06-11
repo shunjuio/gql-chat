@@ -4,9 +4,7 @@ class GqlChatSchema < GraphQL::Schema
   subscription { Types::SubscriptionType }
 
   use GraphQL::Dataloader
-  use GraphQL::Subscriptions::ActionCableSubscriptions,
-      broadcast: true,
-      default_broadcastable: true
+  use GraphQL::Subscriptions::ActionCableSubscriptions, broadcast: true
 
   rescue_from(ActiveRecord::RecordNotFound) do |err, obj, args, ctx, field|
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found", code: "RESOURCE_NOTFOUND"
