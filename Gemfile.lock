@@ -257,11 +257,6 @@ GEM
     securerandom (0.4.1)
     skylight (6.0.4)
       activesupport (>= 5.2.0)
-    solid_cable (3.0.7)
-      actioncable (>= 7.2)
-      activejob (>= 7.2)
-      activerecord (>= 7.2)
-      railties (>= 7.2)
     sqlite3 (2.6.0-aarch64-linux-gnu)
     sqlite3 (2.6.0-arm64-darwin)
     sqlite3 (2.6.0-x86_64-linux-gnu)
@@ -310,7 +305,6 @@ DEPENDENCIES
   rails (~> 8.0.2)
   rubocop-rails-omakase
   skylight
-  solid_cable
   sqlite3 (>= 2.1)
   thruster
 

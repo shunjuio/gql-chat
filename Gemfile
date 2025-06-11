@@ -10,7 +10,7 @@ gem "cssbundling-rails"
 
 # gem "solid_cache"
 # gem "solid_queue"
-gem "solid_cable"
+# gem "solid_cable"
 
 gem "bootsnap", require: false
 
