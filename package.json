@@ -2,6 +2,7 @@
   "name": "app",
   "private": true,
   "devDependencies": {
+    "@apollo/generate-persisted-query-manifest": "^1.4.0",
     "@graphql-codegen/cli": "^5.0.5",
     "@parcel/watcher": "^2.5.1",
     "@tailwindcss/cli": "^4.0.6",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.2",
+    "@apollo/persisted-query-lists": "^1.1.0",
     "@rails/actioncable": "^8.0.100",
     "graphql": "^16.10.0",
     "graphql-ruby-client": "^1.14.7",
