@@ -8,7 +8,7 @@
 - Apollo Client
 - GraphQL, graphql-ruby
 - SQLite
-- Docker Compose
+- Solid Cable
 - Tailwind CSS
 - esbuild
 - GraphQL Codegen

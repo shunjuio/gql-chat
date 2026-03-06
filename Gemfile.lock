@@ -237,10 +237,6 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    redis (5.4.1)
-      redis-client (>= 0.22.0)
-    redis-client (0.26.4)
-      connection_pool
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -275,6 +271,11 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    solid_cable (3.0.12)
+      actioncable (>= 7.2)
+      activejob (>= 7.2)
+      activerecord (>= 7.2)
+      railties (>= 7.2)
     sqlite3 (2.9.1-aarch64-linux-gnu)
     sqlite3 (2.9.1-arm64-darwin)
     sqlite3 (2.9.1-x86_64-linux-gnu)
@@ -323,8 +324,8 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.2)
-  redis
   rubocop-rails-omakase
+  solid_cable
   sqlite3 (>= 2.1)
   thruster
 
