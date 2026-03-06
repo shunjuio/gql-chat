@@ -30,9 +30,10 @@ class GraphqlController < ApplicationController
     query_id = extensions&.dig("persistedQuery", "sha256Hash")
 
     if query_id.present?
-      query = PersistedQueryStore.queries[query_id]
-      raise PersistedQueryError, "PersistedQueryNotFound" if query.nil?
-      return query
+      operation = PersistedQueryStore.queries[query_id]
+      raise PersistedQueryError, "PersistedQueryNotFound" if operation.nil?
+      raise PersistedQueryError, "Mutations must use POST" if request.get? && operation[:type] == "mutation"
+      return operation[:body]
     end
 
     raise PersistedQueryError, "Direct query not allowed in production" if Rails.env.production?

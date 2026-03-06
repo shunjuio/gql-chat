@@ -8,7 +8,7 @@ module PersistedQueryStore
 
       manifest = JSON.parse(File.read(manifest_path))
       manifest["operations"].each_with_object({}) do |op, hash|
-        hash[op["id"]] = op["body"]
+        hash[op["id"]] = { body: op["body"], type: op["type"] }
       end.freeze
     rescue JSON::ParserError
       {}.freeze

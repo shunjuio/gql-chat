@@ -13,11 +13,12 @@ const httpLink = new HttpLink({
 });
 
 // Persisted Query用のリンク
-const persistedQueryLink = createPersistedQueryLink(
-  generatePersistedQueryIdsFromManifest({
-    loadManifest: () => import('./persisted-query-manifest.json'),
-  })
-);
+const persistedQueryLink = createPersistedQueryLink({
+  ...generatePersistedQueryIdsFromManifest({
+    loadManifest: () => import("./persisted-query-manifest.json"),
+  }),
+  useGETForHashedQueries: true,
+});
 
 // WebSocket用のリンク
 const cableLink = new ActionCableLink({
