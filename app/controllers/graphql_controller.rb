@@ -7,19 +7,40 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
   def execute
     variables = prepare_variables(params[:variables])
-    query = params[:query]
+    query = resolve_query
     operation_name = params[:operationName]
     context = {
       current_user:
     }
     result = GqlChatSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
+  rescue PersistedQueryError => e
+    render json: { errors: [ { message: e.message, extensions: { code: "PERSISTED_QUERY_NOT_FOUND" } } ] }, status: :bad_request
   rescue StandardError => e
     raise e unless Rails.env.development?
     handle_error_in_development(e)
   end
 
   private
+
+  def resolve_query
+    extensions = params[:extensions]
+    extensions = JSON.parse(extensions) if extensions.is_a?(String)
+
+    query_id = extensions&.dig("persistedQuery", "sha256Hash")
+
+    if query_id.present?
+      query = PersistedQueryStore.queries[query_id]
+      raise PersistedQueryError, "PersistedQueryNotFound" if query.nil?
+      return query
+    end
+
+    raise PersistedQueryError, "Direct query not allowed in production" if Rails.env.production?
+
+    params[:query]
+  end
+
+  class PersistedQueryError < StandardError; end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
