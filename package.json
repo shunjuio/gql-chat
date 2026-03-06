@@ -9,9 +9,10 @@
     "esbuild": "^0.25.0"
   },
   "scripts": {
-    "build": "esbuild app/javascript/application.jsx --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build": "generate-persisted-query-manifest && esbuild app/javascript/application.jsx --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "generate:pq-manifest": "generate-persisted-query-manifest"
   },
   "dependencies": {
     "@apollo/client": "^3.13.2",
