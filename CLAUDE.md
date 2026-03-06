@@ -47,7 +47,7 @@ yarn codegen
 ### バックエンド (Rails + graphql-ruby)
 
 - GraphQL エンドポイント: `POST /graphql` → `GraphqlController`
-- WebSocket サブスクリプション: `/cable` (ActionCable + Redis アダプター)
+- WebSocket サブスクリプション: `/cable` (ActionCable + Solid Cable アダプター)
 - `app/graphql/gql_chat_schema.rb` がスキーマのエントリーポイント
 - Relay スタイルのグローバル ID を使用 (Base64 エンコードされた GlobalID)
 - サブスクリプションは `GraphQL::Subscriptions::ActionCableSubscriptions` を使用
@@ -76,6 +76,3 @@ GraphQL のディレクトリ構成:
 
 セッションベース。`SessionsController` でログイン処理、`concerns/login_session.rb` で共通処理。
 
-### gem のバージョン制約
-
-`graphql` gem は `~> 2.4.16` に固定 (skylight の graphql probe が 2.5.0 以降に未対応のため)。
