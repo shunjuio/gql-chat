@@ -1,4 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client';
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
+import { generatePersistedQueryIdsFromManifest } from '@apollo/persisted-query-lists';
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
 import { createConsumer } from '@rails/actioncable'
 
@@ -8,6 +10,14 @@ const httpLink = new HttpLink({
   headers: {
     "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content || null,
   }
+});
+
+// Persisted Query用のリンク
+const persistedQueryLink = createPersistedQueryLink({
+  ...generatePersistedQueryIdsFromManifest({
+    loadManifest: () => import("./persisted-query-manifest.json"),
+  }),
+  useGETForHashedQueries: true,
 });
 
 // WebSocket用のリンク
@@ -24,7 +34,7 @@ const hasSubscriptionOperation = ({ query: { definitions } }) => {
 const link = ApolloLink.split(
   hasSubscriptionOperation,
   cableLink,
-  httpLink
+  ApolloLink.concat(persistedQueryLink, httpLink)
 );
 
 export const createClient = (options) => {

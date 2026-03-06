@@ -5,3 +5,6 @@ ignoreNoDocuments: true
 generates:
   './app/javascript/gql/':
     preset: 'client'
+hooks:
+  afterAllFileWrite:
+    - yarn generate:pq-manifest

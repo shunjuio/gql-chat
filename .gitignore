@@ -38,6 +38,7 @@
 
 /node_modules
 app/javascript/gql/*
+app/javascript/persisted-query-manifest.json
 
 # Ignore jetbrains project files
 /.idea
